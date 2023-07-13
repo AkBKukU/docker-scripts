@@ -10,6 +10,18 @@ services:
       - database
     volumes:
       - images:/var/www/html/images
+      
+      # Load extensions individually to avoid exporting the default ones
+      - DeleteBatch:/var/www/html/images/extensions/DeleteBatch
+      - PageInCat:/var/www/html/images/extensions/PageInCat
+      - ParserFunctions:/var/www/html/images/extensions/ParserFunctions
+      - Purge:/var/www/html/images/extensions/Purge
+      - UploadWizard:/var/www/html/images/extensions/UploadWizard
+      - Variables:/var/www/html/images/extensions/Variables
+
+      # Set site favicon
+      - favicon.ico:/var/www/html/favicon.ico
+
       # After initial setup, download LocalSettings.php to the same directory as
       # this yaml and uncomment the following line and use compose to restart
       # the mediawiki service

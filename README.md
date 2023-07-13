@@ -2,6 +2,11 @@
 # Notes
 *I don't know what I'm doing, don't consider any of this to be good.*
 
+## Rootless
+*https://docs.docker.com/engine/security/rootless/*
+Run docker rootless to further restrict container escaping attacks. The docker
+user can also be responsible for managing volume data.
+
 ## Portainer
 I don't really want to learn how to use Docker, so I'm going to be using 
 Portainer to both do stuff for me and hand hold me through setup.
