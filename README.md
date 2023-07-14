@@ -28,8 +28,11 @@ container to preserve it.
 The compose scripts have to contain passwords and other private type information
 to configure the software for you. Putting those in a public git repo is,"A Bad
 Idea TM", so as a work around portainer allows you to augment the compose 
-scripts with an ENV file that contains more values you can add in. So a locally 
-stored ENV file can contain all the sensitive things and still be used with git.
+scripts with an ENV file that contains more values you can add in. The ENV file
+is intended to be loaded in beside the YML file with the compose script. This 
+isn't an option for a publicly hosted repo. So the native ENV file support isn't
+used, but a template file is provided. This file and be loaded manually into the
+portainer GUI and accessed as normal variables from the compose script
 
-You could also use docker secrets, but for me sucking at docker reasons ENV 
+You could also use docker secrets, but for me sucking at docker reasons, ENV 
 files sound more appealing.

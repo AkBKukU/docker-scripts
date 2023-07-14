@@ -38,8 +38,11 @@ services:
     restart: always
       #    volumes:
       #      - db:/var/lib/mysql
-    env_file:
-      - credentials.env
+      environment:
+        MYSQL_DATABASE: $MYSQL_DATABASE
+        MYSQL_USER: $MYSQL_USER
+        MYSQL_PASSWORD: $MYSQL_PASSWORD
+        MYSQL_RANDOM_ROOT_PASSWORD: $MYSQL_RANDOM_ROOT_PASSWORD
 
 volumes:
   images:
