@@ -13,12 +13,12 @@ services:
       - /home/docker/services/tt-wiki-test/images:/var/www/html/images
       
       # Load extensions individually to avoid exporting the default ones
-      - DeleteBatch:/var/www/html/images/extensions/DeleteBatch
-      - PageInCat:/var/www/html/images/extensions/PageInCat
-      - ParserFunctions:/var/www/html/images/extensions/ParserFunctions
-      - Purge:/var/www/html/images/extensions/Purge
-      - UploadWizard:/var/www/html/images/extensions/UploadWizard
-      - Variables:/var/www/html/images/extensions/Variables
+      - /home/docker/services/tt-wiki-test/extensions/DeleteBatch:/var/www/html/images/extensions/DeleteBatch
+      - /home/docker/services/tt-wiki-test/extensions/PageInCat:/var/www/html/images/extensions/PageInCat
+      - /home/docker/services/tt-wiki-test/extensions/ParserFunctions:/var/www/html/images/extensions/ParserFunctions
+      - /home/docker/services/tt-wiki-test/extensions/Purge:/var/www/html/images/extensions/Purge
+      - /home/docker/services/tt-wiki-test/extensions/UploadWizard:/var/www/html/images/extensions/UploadWizard
+      - /home/docker/services/tt-wiki-test/extensions/Variables:/var/www/html/images/extensions/Variables
 
       # Set site favicon
       - /home/docker/services/tt-wiki-test/favicon.ico:/var/www/html/favicon.ico
