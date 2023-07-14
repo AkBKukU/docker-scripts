@@ -29,7 +29,7 @@ services:
   database:
     image: mariadb
     restart: always
-    volumes:
+      #    volumes:
       #      - db:/var/lib/mysql
     env_file:
       - credentials.env
