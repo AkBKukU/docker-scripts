@@ -28,6 +28,8 @@ services:
   # This key also defines the name of the database host used during setup instead of the default "localhost"
   database:
     image: mariadb
+    ports:
+      - 13306:3306
     restart: always
       #    volumes:
       #      - db:/var/lib/mysql
