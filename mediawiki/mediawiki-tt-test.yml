@@ -2,7 +2,7 @@
 version: '3'
 services:
   mediawiki-tt-test:
-    user: "1001:1001"
+    #    user: "1001:1001"
     image: mediawiki
     restart: always
     ports:
@@ -28,7 +28,7 @@ services:
       - /home/docker/services/tt-wiki-test/LocalSettings.php:/var/www/html/LocalSettings.php
   # This key also defines the name of the database host used during setup instead of the default "localhost"
   database:
-    user: "1001:1001"
+    #    user: "1001:1001"
     image: mariadb
     ports:
       - 13306:3306
