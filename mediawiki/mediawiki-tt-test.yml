@@ -3,7 +3,7 @@ version: '3'
 services:
   mediawiki-tt-test:
     #    user: "1001:1001"
-    image: mediawiki
+    image: mediawiki:1.39
     restart: always
     ports:
       - 8080:80
