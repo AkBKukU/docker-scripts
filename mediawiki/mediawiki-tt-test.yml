@@ -31,19 +31,13 @@ services:
       - /home/docker/services/tt-wiki-test/LocalSettings.php:/var/www/html/LocalSettings.php
   # This key also defines the name of the database host used during setup instead of the default "localhost"
   database:
-    #    user: "1001:1001"
     image: mariadb
-    ports:
-      - 13306:3306
     restart: always
-      #    volumes:
-      #      - db:/var/lib/mysql
-      environment:
-        MYSQL_DATABASE: ${MYSQL_DATABASE}
-        MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_RANDOM_ROOT_PASSWORD}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_RANDOM_ROOT_PASSWORD}
 
 volumes:
   images:
-  db:
