@@ -20,7 +20,7 @@ services:
       - /home/docker/services/tt-wiki-test/extensions/DeleteBatch:/var/www/html/extensions/DeleteBatch
       - /home/docker/services/tt-wiki-test/extensions/PageInCat:/var/www/html/extensions/PageInCat
       - /home/docker/services/tt-wiki-test/extensions/ParserFunctions:/var/www/html/extensions/ParserFunctions
-      - /home/docker/services/tt-wiki-test/extensions/Purge:/var/www/html/extensions/Purge
+        #      - /home/docker/services/tt-wiki-test/extensions/Purge:/var/www/html/extensions/Purge
       - /home/docker/services/tt-wiki-test/extensions/UploadWizard:/var/www/html/extensions/UploadWizard
       - /home/docker/services/tt-wiki-test/extensions/Variables:/var/www/html/extensions/Variables
 
