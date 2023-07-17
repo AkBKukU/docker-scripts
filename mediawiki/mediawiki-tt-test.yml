@@ -38,6 +38,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_RANDOM_ROOT_PASSWORD}
+    volumes:
+      - db:/var/lib/mysql
 
 volumes:
-  images:
+  images:  
+  db:
