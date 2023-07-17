@@ -1,6 +1,6 @@
 # Docker Rootless Installation for Portainer
 
-*https://www.portainer.io/blog/portainer-and-rootless-docker*
+*Based on: https://www.portainer.io/blog/portainer-and-rootless-docker*
 
 Setting up Docker without root can offer an additional small layer of protection
 to container escape attacks by limiting the permissions of the user it runs 
@@ -42,7 +42,7 @@ As the `docker` user download and run the installation script:
 
 The script should unpack all of the Docker files into the user's `~/bin` folder.
 After running it will present you with lines to add to your `~/.bashrc` file,
-if they are the same that I saw you can add them with this commands:
+if they are the same that I saw you can add them with these commands:
 
 	echo "export PATH=/home/$USER/bin:\$PATH" >> ~/.bashrc
 	echo "export DOCKER_HOST=unix:///run/user/$UID/docker.sock" >> ~/.bashrc
