@@ -7,6 +7,7 @@ into different documents based you can find here:
 
  - Main Concepts: [README.md](README.md)
  - Docker Rootless Installation: [INSTALL-DOCKER.md](INSTALL-DOCKER.md)
+ - Reverse Proxy Hosting: [WIREGUARD-NGINX.md](WIREGUARD-NGINX.md)
  - Services:
  	 - MediaWiki: [README.md](mediawiki/README.md)
 
