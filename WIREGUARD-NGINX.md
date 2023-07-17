@@ -81,7 +81,7 @@ Create another interface file on the `Content Server` in `/etc/wireguard/`. The
 names do not need to match but it may be helpful for maintenance.
 
 When setting up the connection details for the `Proxy Server` you will need to
-provide an IP or domain name to reach the it at. 
+provide an IP or domain name to reach it at. 
 
 Setup the interface in the file (`/etc/wireguard/wg1.conf`) as such:
 
@@ -101,7 +101,7 @@ You can now bring up the interface like before with:
 
 	sudo wg-quick up wg1
 
-You can verify the connection by attempting to ping the `Proxy Server` with it's
+You can verify the connection by attempting to ping the `Proxy Server` with its
 Wireguard interface IP.
 
 	ping 10.0.100.1
@@ -140,7 +140,7 @@ Once you have your domain and port, you can create virtual host file in
 	}
 
 Symlink with `ln -s` this new file from `/etc/nginx/sites-available/` to 
-`/etc/nginx/sites-enabled` so NGINX will start the proxy. Then reload NGINX to 
+`/etc/nginx/sites-enabled/` so NGINX will start the proxy. Then reload NGINX to 
 make it active:
 
 	sudo systemctl reload nginx.service
