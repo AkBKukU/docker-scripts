@@ -6,6 +6,7 @@ services I've ended up running. Different aspects of this will be broken out
 into different documents based you can find here:
 
  - Main Concepts: [README.md](README.md)
+ - Docker Rootless Installation: [INSTALL-DOCKER.md](INSTALL-DOCKER.md)
  - Services:
  	 - MediaWiki: [README.md](mediawiki/README.md)
 
