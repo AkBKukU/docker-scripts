@@ -29,8 +29,8 @@ Before beginning, ensure Wireguard is installed on both systems:
 
 Each system will need a public and private key. These do not technically need to
 be stored as files, but you may wish to for recreating the connection later if 
-needed. To generate the for now I'm going to assume you are working in an empty
-directory (eg `~/wg/`) and will save the keys there.
+needed. To generate them, for now I'm going to assume you are working in an 
+empty directory (eg `~/wg/`) and will save the keys there.
 
 Keys will look something like this as an example:
 	
