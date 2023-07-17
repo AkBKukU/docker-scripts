@@ -5,8 +5,10 @@ services:
     #    user: "1001:1001"
     image: mediawiki
     restart: always
+    networks:
+      - wg10
     ports:
-      - 8080:80
+      - "10.100.0.2:8080:80"
     links:
       - database
     volumes:
