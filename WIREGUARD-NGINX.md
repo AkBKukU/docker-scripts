@@ -150,10 +150,10 @@ your domain. The virtual host file you made can also be modified by
 `letsencrypt` automatically to provide SSL over port 443 as well.
 
 
-## Bonus: Docker Port Binding
+## Bonus: Docker Port Mapping
 
 When setting up a Docker compose script you can specify an IP for an interface
-on the system to receive traffic throught wen mapping ports. For the above 
+on the system to receive traffic through wen mapping ports. For the above 
 example the `Content Server` could be running a Docker container with this port
 mapping:
 
