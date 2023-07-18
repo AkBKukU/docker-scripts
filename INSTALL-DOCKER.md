@@ -36,9 +36,10 @@ encounter an [XDG_RUNTIME_DIR error](https://github.com/docker/docs/issues/14491
 
 ## 3: Rootless Docker Installation
 
-As the `docker` user download and run the installation script:
+As the `docker` user download, save, and run the installation script:
 
-	wget https://get.docker.com/rootless ; sh rootless
+	wget https://get.docker.com/rootless  
+ 	sh rootless
 
 The script should unpack all of the Docker files into the user's `~/bin` folder.
 After running it will present you with lines to add to your `~/.bashrc` file,
