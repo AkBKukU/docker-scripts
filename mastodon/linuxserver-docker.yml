@@ -1,0 +1,134 @@
+version: "2.1"
+services:
+  mastodon:
+    image: lscr.io/linuxserver/mastodon:latest
+    container_name: mastodon
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - LOCAL_DOMAIN=${LOCAL_DOMAIN}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_NAME=mastodon
+      - DB_PASS=${DB_PASS}
+      - DB_PORT=5432
+      - ES_ENABLED=true
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - OTP_SECRET=${OTP_SECRET}
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+      - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=25
+      - SMTP_LOGIN=${SMTP_LOGIN}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}
+      - S3_ENABLED=false
+      - WEB_DOMAIN=mastodon.example.com #optional
+      - ES_HOST=es #optional
+      - ES_PORT=9200 #optional
+      - ES_USER=${ES_USER} #optional
+      - ES_PASS=${ES_PASS} #optional
+      - S3_BUCKET= #optional
+      - AWS_ACCESS_KEY_ID= #optional
+      - AWS_SECRET_ACCESS_KEY= #optional
+      - S3_ALIAS_HOST= #optional
+      - SIDEKIQ_ONLY=false #optional
+      - SIDEKIQ_QUEUE= #optional
+      - SIDEKIQ_DEFAULT=false #optional
+      - SIDEKIQ_THREADS=5 #optional
+      - DB_POOL=5 #optional
+    volumes:
+      - ${MASTODON_BIND}/config:/config
+    ports:
+      - ${MAP_INTERFACE}${MAP_PORT_WEB}:443
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    networks:
+      - external
+      - internal
+
+  db:
+    restart: always
+    image: postgres:14-alpine
+    shm_size: 256mb
+    networks:
+      - internal
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: mastodon
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres']
+    volumes:
+      - ${MASTODON_BIND}/postgres14:/var/lib/postgresql/data
+
+  redis:
+    restart: always
+    image: redis:7-alpine
+    networks:
+      - internal
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+    volumes:
+      - ${MASTODON_BIND}/redis:/data
+
+#  es:
+#   restart: always
+#   image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
+#   environment:
+#     - "ES_JAVA_OPTS=-Xms512m -Xmx512m -Des.enforce.bootstrap.checks=true"
+#     - "xpack.license.self_generated.type=basic"
+#     - "xpack.security.enabled=false"
+#     - "xpack.watcher.enabled=false"
+#     - "xpack.graph.enabled=false"
+#     - "xpack.ml.enabled=false"
+#     - "bootstrap.memory_lock=true"
+#     - "cluster.name=es-mastodon"
+#     - "discovery.type=single-node"
+#     - "thread_pool.write.queue_size=1000"
+#   networks:
+#      - external
+#      - internal
+#   healthcheck:
+#      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+#   volumes:
+#      - ${MASTODON_BIND}/elasticsearch:/usr/share/elasticsearch/data
+   #ulimits:
+   #  memlock:
+   #    soft: -1
+   #    hard: -1
+   #  nofile:
+   #    soft: 65536
+   #    hard: 65536
+#   ports:
+#     - ${MAP_INTERFACE}${MAP_PORT_ES}:9200
+
+  es:
+    container_name: manticore
+    image: manticoresearch/manticore
+    restart: always
+    ports:
+      - ${MAP_INTERFACE}${MAP_PORT_ES}:9306
+      - 9308:9308
+#    ulimits:
+#      nproc: 65535
+#      nofile:
+#         soft: 65535
+#         hard: 65535
+#      memlock:
+#        soft: -1
+#       hard: -1
+    volumes:
+      - ${MASTODON_BIND}/manticore/data:/var/lib/manticore
+
+
+networks:
+  external:
+  internal:
+    internal: true
