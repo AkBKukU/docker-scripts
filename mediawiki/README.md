@@ -45,4 +45,6 @@ doing. With a valid backup archive this will unpack all of the folders for the
 Volumes.
 
 If this is a new deployment you will need to change the IP address of the 
-database in the `LocalSettings.php` file
+database in the `LocalSettings.php` file. You can use `database` as the
+hostname because the names of all networked services are mapped in the 
+`/etc/hosts` file.
