@@ -15,7 +15,7 @@ to suite your setup.
 Per the [linuxserver/docker-mastodon](https://github.com/linuxserver/docker-mastodon)
 docs you will also need to run:
 
-    /bin/bash lscr.io/linuxserver/mastodon generate-secret
+    docker run --rm -it --entrypoint /bin/bash lscr.io/linuxserver/mastodon generate-secret
 
 to generate a key value for both `SECRET_KEY_BASE` & `OTP_SECRET`. And this
 
