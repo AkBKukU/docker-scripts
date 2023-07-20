@@ -24,7 +24,7 @@ services:
       # Allows the Nextcloud container to access the chosen directory on the
       # host.
       # See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
-      # - NEXTCLOUD_MOUNT=/mnt/
+      - NEXTCLOUD_MOUNT=/mnt/
       - NEXTCLOUD_UPLOAD_LIMIT=0G # Disable public upload
       # - NEXTCLOUD_MAX_TIME=3600
       # - NEXTCLOUD_MEMORY_LIMIT=512M
