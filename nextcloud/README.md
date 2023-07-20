@@ -1,7 +1,9 @@
  # Nexcloud
 
+ **OEM Docs:**
  - [Stock Compose](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml)
  - [Rootless](https://github.com/nextcloud/all-in-one/blob/main/docker-rootless.md)
+ - [Reverse Proxy](https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md)
 
  NextCloud is mostly straightforward because it is a nested container
  that launches a bunch of it's own containers internally. I'm not exactly
@@ -41,3 +43,6 @@ for AIO. The real web interface and port are set with:
       - APACHE_PORT=${MAP_PORT}
       - APACHE_IP_BINDING=${MAP_INTERFACE}
 
+It's also pretty weird about the reverse proxy configuration. I've included
+a sanitized version of my [NGINX conf file](./nextcloud-nginx.conf) that worked
+for me.
