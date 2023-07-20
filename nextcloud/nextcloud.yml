@@ -1,0 +1,34 @@
+services:
+  nextcloud:
+    image: nextcloud/all-in-one:latest
+    restart: always
+    container_name: nextcloud-aio-mastercontainer
+    volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - $XDG_RUNTIME_DIR/docker.sock: /var/run/docker.sock:ro
+    ports:
+      - 8080:8080
+    environment:
+      - WATCHTOWER_DOCKER_SOCKET_PATH=$XDG_RUNTIME_DIR/docker.sock
+      # Is needed when running behind a web server or reverse proxy (like
+      # Apache, Nginx, Cloudflare Tunnel and else).
+      # See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+      # - APACHE_PORT=11000
+      # - APACHE_IP_BINDING=127.0.0.1
+      # Allows to set the host directory for Nextcloud's datadir.
+      # Warning: do not set or adjust this value after the initial Nextcloud
+      # installation is done!
+      # See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
+      # - NEXTCLOUD_DATADIR=/mnt/ncdata
+      # Allows the Nextcloud container to access the chosen directory on the
+      # host.
+      # See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
+      # - NEXTCLOUD_MOUNT=/mnt/
+      - NEXTCLOUD_UPLOAD_LIMIT=0G # Disable public upload
+      # - NEXTCLOUD_MAX_TIME=3600
+      # - NEXTCLOUD_MEMORY_LIMIT=512M
+      # - TALK_PORT=3478
+
+volumes:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer # This line is not allowed to be changed as otherwise the built-in backup solution will not work
