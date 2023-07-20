@@ -7,15 +7,15 @@ services:
       # This line is not allowed to be changed as otherwise the built-in backup solution will not work
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - ${MAP_INTERFACE}${MAP_PORT}:8080
+    #ports:
+      #- ${MAP_INTERFACE}${MAP_PORT}:8080
     environment:
       - WATCHTOWER_DOCKER_SOCKET_PATH=$XDG_RUNTIME_DIR/docker.sock
       # Is needed when running behind a web server or reverse proxy (like
       # Apache, Nginx, Cloudflare Tunnel and else).
       # See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-      # - APACHE_PORT=11000
-      # - APACHE_IP_BINDING=127.0.0.1
+      - APACHE_PORT=${MAP_PORT}
+      - APACHE_IP_BINDING=${MAP_INTERFACE}
       # Allows to set the host directory for Nextcloud's datadir.
       # Warning: do not set or adjust this value after the initial Nextcloud
       # installation is done!
