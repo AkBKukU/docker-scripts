@@ -8,7 +8,7 @@ services:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock:ro
     ports:
-      - 8080:8080
+      - ${MAP_INTERFACE}${MAP_PORT}:8080
     environment:
       - WATCHTOWER_DOCKER_SOCKET_PATH=$XDG_RUNTIME_DIR/docker.sock
       # Is needed when running behind a web server or reverse proxy (like
