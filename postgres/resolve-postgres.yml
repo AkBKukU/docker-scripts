@@ -5,7 +5,7 @@ services:
     image: postgres:13
     shm_size: 256mb
     ports:
-      - ${MAP_INTERFACE}${MAP_PORT_}:5432
+      - ${MAP_INTERFACE}${MAP_PORT}:5432
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
