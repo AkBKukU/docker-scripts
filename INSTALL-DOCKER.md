@@ -13,9 +13,9 @@ as root yourself on the host system.
 
 ## 1: Dependencies 
 
-There is only one package required before we start:
+There are only two packages required before we start:
 
-	sudo apt-get install uidmap
+	sudo apt-get install uidmap curl
 
 ## 2: Docker User Creation
 
