@@ -4,6 +4,7 @@ services:
     restart: always
     image: postgres:13
     shm_size: 256mb
+    user: 1001:1001
     ports:
       - ${MAP_INTERFACE}${MAP_PORT}:5432
     environment:
