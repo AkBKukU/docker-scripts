@@ -2,7 +2,7 @@ version: "2.1"
 services:
   db:
     restart: always
-    image: postgres:13
+    image: postgres:9.5.21-alpine
     shm_size: 256mb
     ports:
       - ${MAP_INTERFACE}${MAP_PORT}:5432
