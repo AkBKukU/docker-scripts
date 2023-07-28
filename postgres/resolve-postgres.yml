@@ -11,7 +11,5 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_HOST_AUTH_METHOD: trust
-    healthcheck:
-      test: ['CMD', 'pg_isready', '-U', '${DB_USER}']
     volumes:
       - ${MOUNT_BIND}/postgres:/var/lib/postgresql/data
