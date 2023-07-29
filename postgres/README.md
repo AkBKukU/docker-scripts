@@ -7,7 +7,15 @@ makes remote video editing a breeze.
 # Postgres
 
 In versions of Resolve prior to 18, postgres 9.5.4 was required, with the
-release of 18 though postgres 13 is now officially supported.
+release of 18 though postgres 13 is now officially supported. However, from
+my testing, postgres 13 *still* does not work. Either with an imported 
+database or a new one(meaning upgrades are not a problem). Version 9.5 is the
+only one I have ever had work.
+
+As such, I would advise reading the [Wireguard](../WIREGUARD-NGINX.md) setup
+page, and mapping the out of date version of Postgres to a VPN tunnel to use 
+for connecting to it. As a bonus, you can map file shares through it as well
+and have a single, secure, connection for editing.
 
 ## Maintenance
 
