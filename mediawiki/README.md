@@ -58,7 +58,7 @@ issues. Here are ones I have encountered:
 
 There is an [official](https://www.mediawiki.org/wiki/Manual:Common_errors_and_symptoms#The_wiki_appears_without_styles_applied_and_images_are_missing)
 page on this problem, but it does not contain a solution that works for this
-edge case. I have had to set `$wgScript = ""` to solve this. The docker image
+edge case. I have had to set `$wgScriptPath = ""` to solve this. The docker image
 seems to put all the files for that path in root and setting anything breaks it.
 
 ### No Logo
