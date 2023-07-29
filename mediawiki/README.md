@@ -48,3 +48,21 @@ If this is a new deployment you will need to change the IP address of the
 database in the `LocalSettings.php` file. You can use `database` as the
 hostname because the names of all networked services are mapped in the 
 `/etc/hosts` file.
+
+## Migration Notes
+
+When moving a Mediawiki site to docker for the first time you may run into some
+issues. Here are ones I have encountered:
+
+### No CSS and Images
+
+There is an [official](https://www.mediawiki.org/wiki/Manual:Common_errors_and_symptoms#The_wiki_appears_without_styles_applied_and_images_are_missing)
+page on this problem, but it does not contain a solution that works for this
+edge case. I have had to set `$wgScript = ""` to solve this. The docker image
+seems to put all the files for that path in root and setting anything breaks it.
+
+### No Logo
+
+You may have put your logo in somewhere like `/resources/assets` which is a 
+folder managed by the docker image now. The easiest solution is to just upload
+the logo to the wiki and then use the path to the file in the images folder.
