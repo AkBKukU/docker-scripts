@@ -37,8 +37,8 @@ with all the other files.
 
 ### Restore
 
-Restoring is more complicated. Run `./mediawiki-restore.sh $container_name
-$archive_name` in the directory where the Volumes will look for the files. As
+Restoring is more complicated. Run `./mediawiki-restore.sh $archive_name $container_name`
+in the directory where the Volumes will look for the files. As
 part of the restore process this will **DROP DATABASE** for a database with the
 name given in the `credentials.env` in the archive, so be sure of what you are
 doing. With a valid backup archive this will unpack all of the folders for the 
