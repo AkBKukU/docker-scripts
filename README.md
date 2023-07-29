@@ -10,6 +10,9 @@ into different documents based you can find here:
  - Reverse Proxy Hosting: [WIREGUARD-NGINX.md](WIREGUARD-NGINX.md)
  - Services:
  	 - MediaWiki: [README.md](mediawiki/README.md)
+ 	 - Mastodon: [README.md](mastodon/README.md)
+ 	 - Nextcloud: [README.md](nextcloud/README.md)
+ 	 - DaVinci Resolve Postgres: [README.md](postgres/README.md)
 
 ## Main Concepts for Docker
 
