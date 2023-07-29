@@ -23,7 +23,7 @@ services:
       #   Can also add more
       - ${BIND_DIR}/extensions/DeleteBatch:/var/www/html/extensions/DeleteBatch
       - ${BIND_DIR}/extensions/PageInCat:/var/www/html/extensions/PageInCat
-      - ${BIND_DIR}/extensions/ParserFunctions:/var/www/html/extensions/ParserFunctions
+      # - ${BIND_DIR}/extensions/ParserFunctions:/var/www/html/extensions/ParserFunctions
 #      - ${BIND_DIR}/extensions/Purge:/var/www/html/extensions/Purge
       - ${BIND_DIR}/extensions/UploadWizard:/var/www/html/extensions/UploadWizard
       - ${BIND_DIR}/extensions/Widgets:/var/www/html/extensions/Widgets
