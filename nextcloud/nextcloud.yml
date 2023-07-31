@@ -10,6 +10,9 @@ services:
     ports:
       - ${SETUP_PORT}:8080
       - 8443:8443
+      - 81:80
+    networks:
+      - external
     environment:
       - WATCHTOWER_DOCKER_SOCKET_PATH=$XDG_RUNTIME_DIR/docker.sock
       # Is needed when running behind a web server or reverse proxy (like
@@ -34,3 +37,6 @@ services:
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer # This line is not allowed to be changed as otherwise the built-in backup solution will not work
+
+networks:
+  external:
