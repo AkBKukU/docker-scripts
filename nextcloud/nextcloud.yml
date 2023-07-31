@@ -1,6 +1,6 @@
 services:
   nextcloud:
-    image: nextcloud/all-in-one:27.0.0
+    image: nextcloud/all-in-one:20230626_101439-latest
     restart: always
     container_name: nextcloud-aio-mastercontainer
     volumes:
