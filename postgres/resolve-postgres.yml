@@ -13,3 +13,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ${MOUNT_BIND}/postgres:/var/lib/postgresql/data
+    dns:
+      - 8.8.8.8
+      - 4.4.4.4
+      - 1.1.1.1
