@@ -47,6 +47,33 @@ It's also pretty weird about the reverse proxy configuration. I've included
 a sanitized version of my [NGINX conf file](./nextcloud-nginx.conf) that worked
 for me.
 
+### Caching
+
+Nexcloud is slow enough as is, adding some proxy side caching can help a lot
+to speed it up. The following NGINX pages describe the basis:
+
+ - [Basic Example](https://www.nginx.com/resources/wiki/start/topics/examples/reverseproxycachingexample/)
+ - [Technical Info](https://docs.nginx.com/nginx/admin-guide/content-cache/content-caching/)
+
+The TL;DR for setting it up is, create a folder to put the cach files:
+
+    sudo mkdir -p /data/nginx/cache
+
+Update `/etc/nginx/nginx.conf`'s `http` section to have proxy info:
+
+    ##
+    # Cache
+    ##
+    proxy_cache_path /data/nginx/cache keys_zone=mycache:10m max_size=10g;
+
+In your site host file add this before your `location` directive:
+
+    proxy_cache mycache;
+    proxy_cache_min_uses 3
+
+After a URI is visited three times it should be cached with a total of up
+to 10GB of data being cached at once.
+
 ## Sensible Configurations
 
 There are some dumb defaults for nextcloud. Here are some things to change
