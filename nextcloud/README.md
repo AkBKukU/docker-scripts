@@ -115,6 +115,14 @@ For the intial generation run:
 
     docker exec --user www-data -it nextcloud-aio-nextcloud php occ preview:generate-all
 
+
+If you run into an issue about running ot of memory you need to [raise the php](https://github.com/nextcloud/docker/issues/1014#issuecomment-595887548)
+memory_limit value in the nextcloud container and restart it:
+
+    echo "upload_max_filesize=512M
+    post_max_size=550M
+    memory_limit=1G" >> /usr/local/etc/php/conf.d/zzz-custom.ini
+
 Afterwards add the following to the crontab for the docker user with your
 desired run interval:
 
