@@ -73,6 +73,30 @@ to maintain proper file ownership.
 You can enable external storage with an admin account here:
 Apps>External storage support>Enable
 
+### Thumbnails Aren't Made
+
+Nextcloud generates thumbnails on demand, this is fine if you are starting
+with an all new dataset, but makes importing existing ones a nightmare.
+There is a [Preview Generator](https://apps.nextcloud.com/apps/previewgenerator)
+plugin to scan all files and generate thubnails for them in advance.
+
+You can install it through Nextcloud itself as an app as an admin.
+
+Running it requries [docker access](https://github.com/nextcloud/all-in-one/discussions/2810)
+
+For the intial generation run:
+
+    docker exec --user www-data -it nextcloud-aio-nextcloud php occ preview:generate-all
+
+Afterwards add the following to the crontab for the docker user with your
+desired run interval:
+
+    docker ps --format "{{.Names}}" | grep -q "^nextcloud-aio-nextcloud$" && docker exec --user www-data nextcloud-aio-nextcloud php occ preview:pre-generate
+
+**Note:** *The weird command checks that the container is running before
+attempting to generate the thumbnails which could cause an empty instance
+to be created.*
+
 ## Issues
 
 ### Files missing from upload
