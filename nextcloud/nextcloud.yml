@@ -24,7 +24,7 @@ services:
       # Warning: do not set or adjust this value after the initial Nextcloud
       # installation is done!
       # See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
-      # - NEXTCLOUD_DATADIR=/mnt/ncdata
+      - NEXTCLOUD_DATADIR=${USER_DATA_FOLDER}
       # Allows the Nextcloud container to access the chosen directory on the
       # host.
       # See https://github.com/nextcloud/all-in-one#how-to-allow-the-nextcloud-container-to-access-directories-on-the-host
