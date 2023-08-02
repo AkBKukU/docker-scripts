@@ -47,6 +47,32 @@ It's also pretty weird about the reverse proxy configuration. I've included
 a sanitized version of my [NGINX conf file](./nextcloud-nginx.conf) that worked
 for me.
 
+## Sensible Configurations
+
+There are some dumb defaults for nextcloud. Here are some things to change
+when first setting it up:
+
+### Public Share Talk
+
+By default, publically shared files have conversation and call channels
+available to them and *guest* accounts can join. Anyone with the link
+can spam the server.
+
+With an admin account change the following setting to disable this:
+Administration Settings>Talk>Allow conversations on public shares for files
+
+### External Storage
+
+By default Nextcloud can only manage data created through its own means.
+You can add external data sources to it to incorperate existing datasets.
+While it can access local directories, I would advice against it as it
+creates a file ownership isssue when writing new files. Using a network
+share on the host to the Nextcloud server can map UID/GID more easily
+to maintain proper file ownership.
+
+You can enable external storage with an admin account here:
+Apps>External storage support>Enable
+
 ## Issues
 
 ### Files missing from upload
