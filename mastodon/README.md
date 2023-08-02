@@ -54,8 +54,9 @@ I installed Nextcloud and discovered it also uses elasticsearch. But it **did**
 work under docker rootless! Nextcloud wraps other images inside their own 
 versions of them and re-release them, which means you could actually use a
 Nextcloud release of ES on its own, so I did. AND IT WORKED! The provided 
-compose file has it set up already. Just set a password for the `elastic` user.
-But you will need to activate it after setting up Mastodon.
+compose file has it set up already. Make sure to set a password for the
+`elastic` user. I also had to change the permissions of the esdata volume
+folder. After that you will need to activate it after setting up Mastodon.
 
 To get Mastodon to set up the ES database, run the following command from the
 `app/www` folder:
