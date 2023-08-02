@@ -47,8 +47,30 @@ Manticore never seemed to work either for reasons I couldn't diagnoes. I saw
 requests from the mastodon container but it was throwing MySQL errors for some
 reason. It may need setup, or it may not even be compatible. I have no idea.
 
-I would like to get Eleaticsearch working but I would also like to be done, so
-I'm giving up.
+
+### But what if, Nextcloud has the answer?
+
+I installed Nextcloud and discovered it also uses elasticsearch. But it **did**
+work under docker rootless! Nextcloud wraps other images inside their own 
+versions of them and re-release them, which means you could actually use a
+Nextcloud release of ES on its own, so I did. AND IT WORKED! The provided 
+compose file has it set up already. Just set a password for the `elastic` user.
+But you will need to activate it after setting up Mastodon.
+
+To get Mastodon to set up the ES database, run the following command from the
+`app/www` folder:
+
+    RAILS_ENV=production bin/tootctl search deploy
+
+There is an [issue](https://github.com/mastodon/mastodon/issues/18625) 
+when trying to initialize an ES server that has to do with a terminal feature
+of all things. Using the following hack before setting up ES will disable the
+progress bar.
+
+    sed -E 's/indices.sum.+/2000/g' -i lib/mastodon/search_cli.rb
+
+After that, it should be functional!
+
 
 ## Email
 

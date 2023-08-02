@@ -15,7 +15,7 @@ services:
       - DB_NAME=mastodon
       - DB_PASS=${DB_PASS}
       - DB_PORT=5432
-      - ES_ENABLED=false
+      - ES_ENABLED=true
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - OTP_SECRET=${OTP_SECRET}
       - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
@@ -26,26 +26,18 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}
       - S3_ENABLED=false
-      - WEB_DOMAIN=mastodon.example.com #optional
-      - ES_HOST=es #optional
-      - ES_PORT=9200 #optional
-      - ES_USER=${ES_USER} #optional
-      - ES_PASS=${ES_PASS} #optional
-      - S3_BUCKET= #optional
-      - AWS_ACCESS_KEY_ID= #optional
-      - AWS_SECRET_ACCESS_KEY= #optional
-      - S3_ALIAS_HOST= #optional
-      - SIDEKIQ_ONLY=false #optional
-      - SIDEKIQ_QUEUE= #optional
-      - SIDEKIQ_DEFAULT=false #optional
-      - SIDEKIQ_THREADS=5 #optional
-      - DB_POOL=5 #optional
+      - WEB_DOMAIN=${LOCAL_DOMAIN}
+      - ES_HOST=es
+      - ES_PORT=9200
+      - ES_USER=elastic
+      - ES_PASS=${ES_PASS} # Set at runtime
     volumes:
       - ${MASTODON_BIND}/config:/config
     ports:
       - ${MAP_INTERFACE}${MAP_PORT_WEB}:443
     restart: unless-stopped
     depends_on:
+      - es
       - db
       - redis
     networks:
@@ -78,56 +70,21 @@ services:
     volumes:
       - ${MASTODON_BIND}/redis:/data
 
-# ElasticSearch Backend - Doesn't work on rootless
-#  es:
-#   restart: always
-#   image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
-#   environment:
-#     - "ES_JAVA_OPTS=-Xms512m -Xmx512m -Des.enforce.bootstrap.checks=true"
-#     - "xpack.license.self_generated.type=basic"
-#     - "xpack.security.enabled=false"
-#     - "xpack.watcher.enabled=false"
-#     - "xpack.graph.enabled=false"
-#     - "xpack.ml.enabled=false"
-#     - "bootstrap.memory_lock=true"
-#     - "cluster.name=es-mastodon"
-#     - "discovery.type=single-node"
-#     - "thread_pool.write.queue_size=1000"
-#   networks:
-#      - external
-#      - internal
-#   healthcheck:
-#      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
-#   volumes:
-#      - ${MASTODON_BIND}/elasticsearch:/usr/share/elasticsearch/data
-   #ulimits:
-   #  memlock:
-   #    soft: -1
-   #    hard: -1
-   #  nofile:
-   #    soft: 65536
-   #    hard: 65536
-#   ports:
-#     - ${MAP_INTERFACE}${MAP_PORT_ES}:9200
-
-# Manticore Search backend - Doesn't work outright
-#  es:
-#    container_name: manticore
-#    image: manticoresearch/manticore
-#    restart: always
-#    ports:
-#      - ${MAP_INTERFACE}${MAP_PORT_ES}:9306
-#      - 9308:9308
-#    ulimits:
-#      nproc: 65535
-#      nofile:
-#         soft: 65535
-#         hard: 65535
-#      memlock:
-#        soft: -1
-#       hard: -1
-#    volumes:
-#      - ${MASTODON_BIND}/manticore/data:/var/lib/manticore
+  es:
+    restart: always
+    image: nextcloud/aio-fulltextsearch
+    networks:
+      - internal
+    volumes:
+      - ${MASTODON_BIND}/esdata:/usr/share/elasticsearch/data
+    environment:
+      TZ: ${TZ}
+      ELASTIC_PASSWORD: ${ES_PASS}
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms1024M -Xmx1024M
+      PATH: /usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      ELASTIC_CONTAINER: true
+      xpack.security.enabled: false
 
 
 networks:
