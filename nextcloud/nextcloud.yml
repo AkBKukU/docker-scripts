@@ -6,7 +6,7 @@ services:
     volumes:
       # This line is not allowed to be changed as otherwise the built-in backup solution will not work
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      #      - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - ${SETUP_PORT}:8080
       - 8443:8443
