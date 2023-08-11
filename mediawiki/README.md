@@ -13,6 +13,7 @@ Volumes:
 extensions installed making it complicated to export.
  - `LocalSettings.php`: The primary configuration file for Mediawiki
  - `favicon.ico`: Needed to set a favicon
+ - `php`: A folder for php ini configuration files, needed to change upload size
 
 MariaDB will also need configured to provide access to Mediawiki. This is done
 at deployment time with substitute variables. The `credentials.env` file is an

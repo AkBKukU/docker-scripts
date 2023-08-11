@@ -14,6 +14,9 @@ services:
     volumes:
       # Wiki images
       - ${BIND_DIR}/images:/var/www/html/images
+
+      # PHP Configuration
+      - ${BIND_DIR}/php/99-Wiki.ini:/usr/local/etc/php/conf.d/99-Wiki.ini
       
       # Load whole extensions folder (MUST exporti default extensions)
       #- ${BIND_DIR}/extensions:/var/www/html/extensions
