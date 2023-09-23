@@ -31,7 +31,7 @@ services:
       - NEXTCLOUD_MOUNT=/mnt/
       - NEXTCLOUD_UPLOAD_LIMIT=0G # Disable public upload
       # - NEXTCLOUD_MAX_TIME=3600
-      # - NEXTCLOUD_MEMORY_LIMIT=512M
+      - NEXTCLOUD_MEMORY_LIMIT=${NEXTCLOUD_MEMORY_LIMIT}
       # - TALK_PORT=3478
 
 volumes:
