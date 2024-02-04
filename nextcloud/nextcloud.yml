@@ -1,8 +1,8 @@
 services:
   nextcloud:
     # Due to accidentally version locking, sequential updates must be done to allow the cumulative changes to happen. 
-    image: nextcloud/all-in-one:20230626_101439-latest # Starting point
-    #image: nextcloud/all-in-one:20230720_134150-latest # Test of going one update farther
+    #image: nextcloud/all-in-one:20230626_101439-latest # Starting point
+    image: nextcloud/all-in-one:20230720_134150-latest # Test of going one update farther
     #image: nextcloud/all-in-one:20230817_065941-latest
     #image: nextcloud/all-in-one:20230912_084059-latest
     #image: nextcloud/all-in-one:20230916_091439-latest
