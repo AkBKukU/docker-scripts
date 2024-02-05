@@ -9,8 +9,8 @@ services:
     #image: nextcloud/all-in-one:20231027_071516-latest
     #image: nextcloud/all-in-one:20231113_125854-latest
     #image: nextcloud/all-in-one:20231212_115941-latest
-    image: nextcloud/all-in-one:20240109_092105-latest
-    #image: nextcloud/all-in-one:20240201_120631-latest
+    #image: nextcloud/all-in-one:20240109_092105-latest
+    image: nextcloud/all-in-one:20240201_120631-latest
     #image: nextcloud/all-in-one:latest # The Goal
     restart: always
     container_name: nextcloud-aio-mastercontainer
