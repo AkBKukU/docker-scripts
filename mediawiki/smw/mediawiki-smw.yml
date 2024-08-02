@@ -1,0 +1,61 @@
+# Mediawiki with ENV file credentials
+version: '3'
+services:
+  mediawiki:
+    container_name: semanticmediawiki
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "${MAP_INTERFACE}${MAP_PORT}:80"
+    depends_on:
+      - database
+    networks:
+      - external
+      - internal
+    volumes:
+      # Wiki images
+      - ${BIND_DIR}/images:/var/www/html/images
+      
+      # Load whole extensions folder (MUST exporti default extensions)
+      #- ${BIND_DIR}/extensions:/var/www/html/extensions
+      
+      # Load extensions individually to avoid exporting the default ones
+      #   Can comment any or all of these if you don't use them
+      #   Can also add more
+      - ${BIND_DIR}/extensions/DeleteBatch:/var/www/html/extensions/DeleteBatch
+      - ${BIND_DIR}/extensions/PageInCat:/var/www/html/extensions/PageInCat
+      # - ${BIND_DIR}/extensions/ParserFunctions:/var/www/html/extensions/ParserFunctions
+      - ${BIND_DIR}/extensions/Purge:/var/www/html/extensions/Purge
+      - ${BIND_DIR}/extensions/UploadWizard:/var/www/html/extensions/UploadWizard
+      - ${BIND_DIR}/extensions/Widgets:/var/www/html/extensions/Widgets
+#      - ${BIND_DIR}/extensions/Variables:/var/www/html/extensions/Variables
+
+      # Set site favicon
+      - ${BIND_DIR}/favicon.ico:/var/www/html/favicon.ico
+
+      # Import existing LocalSettings
+      - ${BIND_DIR}/LocalSettings.php:/var/www/html/LocalSettings.php
+      
+  database:
+    image: mariadb
+    restart: always
+    networks:
+      - internal
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  images:  
+  db:
+  
+networks:
+  external:
+  internal:
+    internal: true                                                    
