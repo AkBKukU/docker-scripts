@@ -36,7 +36,7 @@ services:
       - ${BIND_DIR}/favicon.ico:/var/www/html/favicon.ico
 
       # Import existing LocalSettings
-      - ${BIND_DIR}/LocalSettings.php:/var/www/html/LocalSettings.php
+      #- ${BIND_DIR}/LocalSettings.php:/var/www/html/LocalSettings.php
       
   database:
     image: mariadb
