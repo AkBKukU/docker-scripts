@@ -9,6 +9,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
 
+# Fix PHP stuff (idk what this fixes, it's been too long)
+RUN echo -e "memory_limit = 50M\npost_max_size = 50M\nupload_max_filesize = 50M" > /usr/local/etc/php/conf.d/99-Wiki.ini
+
 # Install composer based extensions
 RUN cd /var/www/html/ \
 	&& composer require mediawiki/semantic-media-wiki --update-no-dev \
