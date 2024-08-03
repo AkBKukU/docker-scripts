@@ -1,4 +1,4 @@
-FROM mediawiki:1.4.1
+FROM mediawiki:1.41
 
 LABEL name="TechTangent's MediaWiki"
 
