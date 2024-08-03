@@ -13,9 +13,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 RUN echo -e "memory_limit = 50M\npost_max_size = 50M\nupload_max_filesize = 50M" > /usr/local/etc/php/conf.d/99-Wiki.ini
 
 # Install composer based extensions
+# normalized-exception version locked per: https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues/5519#issuecomment-2137684545
 RUN cd /var/www/html/ \
     && echo "{}" > composer.local.json \
     && export COMPOSER=composer.local.json \
+	&& composer wikimedia/normalized-exception "^1.0" --update-no-dev \
 	&& composer require mediawiki/semantic-media-wiki --update-no-dev \
 	&& composer require mediawiki/semantic-result-formats --update-no-dev
 
