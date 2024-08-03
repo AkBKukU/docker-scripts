@@ -32,6 +32,7 @@ RUN cd /var/www/html/ \
     && echo "{}" > composer.local.json \
     && export COMPOSER=composer.local.json \
 	&& composer require wikimedia/at-ease "^2.1" --update-no-dev --no-scripts --no-plugins \
+	&& composer require liuggio/statsd-client-bundle --update-no-dev --no-scripts --no-plugins \
 	&& composer require wikimedia/normalized-exception "^1.0" --update-no-dev --no-scripts --no-plugins \
 	&& composer require mediawiki/semantic-media-wiki --update-no-dev --no-scripts --no-plugins \
 	&& composer require mediawiki/semantic-result-formats --update-no-dev --no-scripts --no-plugins
