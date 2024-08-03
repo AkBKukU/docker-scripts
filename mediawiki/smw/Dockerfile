@@ -14,10 +14,10 @@ RUN echo -e "memory_limit = 50M\npost_max_size = 50M\nupload_max_filesize = 50M"
 
 # Install composer based extensions
 RUN cd /var/www/html/ \
+    && echo "{}" > composer.local.json \
+    && export COMPOSER=composer.local.json \
 	&& composer require mediawiki/semantic-media-wiki --update-no-dev \
-	&& composer require mediawiki/semantic-result-formats --update-no-dev \
-	&& composer require mediawiki/semantic-compound-queries --update-no-dev \
-	&& composer require professional-wiki/id-generator --update-no-dev
+	&& composer require mediawiki/semantic-result-formats --update-no-dev
 
 
 # Need to execute program here, eg.
