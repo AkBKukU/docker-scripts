@@ -2,10 +2,7 @@
 version: '3'
 services:
   mediawiki:
-    container_name: semanticmediawiki
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mediawiki:1.39
     restart: always
     ports:
       - "${MAP_INTERFACE}${MAP_PORT}:80"
@@ -36,7 +33,7 @@ services:
       - ${BIND_DIR}/favicon.ico:/var/www/html/favicon.ico
 
       # Import existing LocalSettings
-      - ${BIND_DIR}/LocalSettings.php:/var/www/html/LocalSettings.php
+      #- ${BIND_DIR}/LocalSettings.php:/var/www/html/LocalSettings.php
       
   database:
     image: mariadb

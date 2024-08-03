@@ -1,4 +1,4 @@
-FROM mediawiki:1.41
+FROM mediawiki:1.39
 
 LABEL name="TechTangent's MediaWiki"
 
@@ -28,14 +28,22 @@ RUN echo -e "memory_limit = 50M\npost_max_size = 50M\nupload_max_filesize = 50M"
 
 # Install composer based extensions
 # normalized-exception version locked per: https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues/5519#issuecomment-2137684545
+# COMPOSER_ALLOW_SUPERUSER=1
+# composer config --no-plugins allow-plugins.composer/installers [true|false]
+# zordius/lightncandy
 RUN cd /var/www/html/ \
     && echo "{}" > composer.local.json \
     && export COMPOSER=composer.local.json \
-	&& composer require wikimedia/at-ease "^2.1" --update-no-dev --no-scripts --no-plugins \
-	&& composer require liuggio/statsd-client-bundle --update-no-dev --no-scripts --no-plugins \
-	&& composer require wikimedia/normalized-exception "^1.0" --update-no-dev --no-scripts --no-plugins \
-	&& composer require mediawiki/semantic-media-wiki --update-no-dev --no-scripts --no-plugins \
-	&& composer require mediawiki/semantic-result-formats --update-no-dev --no-scripts --no-plugins
+    && export COMPOSER_ALLOW_SUPERUSER=1 \
+    &&  composer config --no-plugins allow-plugins.composer/installers false \
+	&& composer update \
+	&& composer require wikimedia/at-ease "^2.1" --update-no-dev \
+	&& composer require liuggio/statsd-client-bundle --update-no-dev  \
+	&& composer require wikimedia/normalized-exception "^1.0" --update-no-dev \
+	&& composer require mediawiki/semantic-media-wiki "~4.1.3" --update-no-dev --with-all-dependencies \
+ 	 && composer require zordius/lightncandy --update-no-dev \
+ 	&& composer require mediawiki/semantic-result-formats --update-no-dev \
+	&& composer update -w
 
 
 # Need to execute program here, eg.
