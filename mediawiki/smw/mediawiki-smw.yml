@@ -21,22 +21,15 @@ services:
       # Load whole extensions folder (MUST exporti default extensions)
       #- ${BIND_DIR}/extensions:/var/www/html/extensions
       
-      # Load extensions individually to avoid exporting the default ones
-      #   Can comment any or all of these if you don't use them
-      #   Can also add more
-      - ${BIND_DIR}/extensions/DeleteBatch:/var/www/html/extensions/DeleteBatch
-      - ${BIND_DIR}/extensions/PageInCat:/var/www/html/extensions/PageInCat
-      # - ${BIND_DIR}/extensions/ParserFunctions:/var/www/html/extensions/ParserFunctions
-      - ${BIND_DIR}/extensions/Purge:/var/www/html/extensions/Purge
-      - ${BIND_DIR}/extensions/UploadWizard:/var/www/html/extensions/UploadWizard
-      - ${BIND_DIR}/extensions/Widgets:/var/www/html/extensions/Widgets
-#      - ${BIND_DIR}/extensions/Variables:/var/www/html/extensions/Variables
+      # Use custom extensions directory
+      - ${BIND_DIR}/extensions:/var/www/html/extensions-custom
 
       # Set site favicon
       - ${BIND_DIR}/favicon.ico:/var/www/html/favicon.ico
 
-      # Import existing LocalSettings
-      - ${BIND_DIR}/LocalSettings.php:/var/www/html/LocalSettings.php
+      # Import LocalSettings
+      # After initialization unset ${INIT}
+      - ${BIND_DIR}/LocalSettings.php:${INIT}/var/www/html/LocalSettings.php
       
   database:
     image: mariadb

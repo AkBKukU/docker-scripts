@@ -1,6 +1,17 @@
-FROM mediawiki:1.39
+FROM mediawiki:1.41
 
-LABEL name="TechTangent's MediaWiki"
+LABEL name="TechTangents' MediaWiki"
+
+ARG PHP_MEMORY_LIMIT="50M"
+ARG PHP_POST_MAX_SIZE="50M"
+ARG PHP_UPLOAD_MAX_FILESIZE="50M"
+ARG MW_BASE_PATH="/var/www/html"
+ARG MW_LOCAL_SETTINGS="LocalSettings.php"
+ARG MW_COMPOSER_LOCAL="composer.local.json"
+ARG SMW_VERSION="^4.2.0"
+ARG SMW_WIKI_DOMAIN="example.org"
+
+ENV MW_BASE_PATH="/var/www/html"
 
 # Install additional packages
 RUN apt-get update && apt-get install -y \
@@ -15,36 +26,31 @@ RUN docker-php-ext-install \
 RUN docker-php-ext-enable \
     zip
 
-
-# Install Composer (Reference: https://getcomposer.org/download/)
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" &&\
-    php composer-setup.php && \
-    php -r "unlink('composer-setup.php');" && \
-    mv composer.phar /usr/local/bin/composer
+# Install Composer (Reference: https://stackoverflow.com/a/58694421)
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Fix PHP stuff (idk what this fixes, it's been too long)
-RUN echo -e "memory_limit = 50M\npost_max_size = 50M\nupload_max_filesize = 50M" > /usr/local/etc/php/conf.d/99-Wiki.ini
+RUN echo -e " \
+memory_limit = ${PHP_MEMORY_LIMIT}\n \
+post_max_size = ${PHP_POST_MAX_SIZE}\n \
+upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE} \
+" > /usr/local/etc/php/conf.d/99-Wiki.ini
 
-# Install composer based extensions
-# normalized-exception version locked per: https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues/5519#issuecomment-2137684545
-# COMPOSER_ALLOW_SUPERUSER=1
-# composer config --no-plugins allow-plugins.composer/installers [true|false]
-# zordius/lightncandy
-RUN cd /var/www/html/ \
-    && echo "{}" > composer.local.json \
-    && export COMPOSER=composer.local.json \
-    && export COMPOSER_ALLOW_SUPERUSER=1 \
-    &&  composer config --no-plugins allow-plugins.composer/installers false \
-	&& composer update \
-	&& composer require wikimedia/at-ease "^2.1" --update-no-dev \
-	&& composer require liuggio/statsd-client-bundle --update-no-dev  \
-	&& composer require wikimedia/normalized-exception "^1.0" --update-no-dev \
-	&& composer require mediawiki/semantic-media-wiki "~4.1.3" --update-no-dev --with-all-dependencies \
- 	 && composer require zordius/lightncandy --update-no-dev \
- 	&& composer require mediawiki/semantic-result-formats --update-no-dev \
-	&& composer update -w
+# Create a script that conditionally installs SMW
+COPY <<EOF ${MW_BASE_PATH}/install-smw.sh
+#!/usr/bin/env bash
+if [ -f "${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}" ] && [ ! -f ${MW_BASE_PATH}/${MW_COMPOSER_LOCAL} ]; then
+    echo '{"require":{"mediawiki/semantic-media-wiki":"${SMW_VERSION}"}}' > ${MW_BASE_PATH}/${MW_COMPOSER_LOCAL}
+    composer update --no-dev
+fi
+if [ -f "${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}" ] && ! grep -q "SemanticMediaWiki" ${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}; then
+    echo "wfLoadExtension( 'SemanticMediaWiki' );" >> ${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}
+    echo "enableSemantics( '${SMW_WIKI_DOMAIN}' );" >> ${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}
+fi
+/usr/local/bin/php ${MW_BASE_PATH}/maintenance/update.php
+EOF
 
+RUN chmod +x ${MW_BASE_PATH}/install-smw.sh
 
-# Need to execute program here, eg.
-# CMD ["php-fpm"]
+CMD ${MW_BASE_PATH}/install-smw.sh && \
+    apache2-foreground
