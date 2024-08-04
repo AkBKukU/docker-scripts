@@ -37,18 +37,7 @@ upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE} \
 " > /usr/local/etc/php/conf.d/99-Wiki.ini
 
 # Create a script that conditionally installs SMW
-COPY <<EOF ${MW_BASE_PATH}/install-smw.sh
-#!/usr/bin/env bash
-if [ -f "${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}" ] && [ ! -f ${MW_BASE_PATH}/${MW_COMPOSER_LOCAL} ]; then
-    echo '{"require":{"mediawiki/semantic-media-wiki":"${SMW_VERSION}"}}' > ${MW_BASE_PATH}/${MW_COMPOSER_LOCAL}
-    composer update --no-dev
-fi
-if [ -f "${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}" ] && ! grep -q "SemanticMediaWiki" ${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}; then
-    echo "wfLoadExtension( 'SemanticMediaWiki' );" >> ${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}
-    echo "enableSemantics( '${SMW_WIKI_DOMAIN}' );" >> ${MW_BASE_PATH}/${MW_LOCAL_SETTINGS}
-fi
-/usr/local/bin/php ${MW_BASE_PATH}/maintenance/update.php
-EOF
+COPY ./install-smw.sh ${MW_BASE_PATH}/install-smw.sh
 
 RUN chmod +x ${MW_BASE_PATH}/install-smw.sh
 
