@@ -15,29 +15,34 @@ ENV MW_BASE_PATH="/var/www/html"
 
 # Install additional packages
 RUN apt-get update && apt-get install -y \
-    unzip \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype-dev \
-    libjpeg62-turbo-dev \
-    libgd3 \
-    vim
+	unzip \
+	libzip-dev \
+	libpng-dev \
+	libjpeg-dev \
+	libfreetype-dev \
+	libjpeg62-turbo-dev \
+	libgd3 \
+	liblua5.1-0-dev \
+	libmagickwand-dev \
+	libzstd-dev \
+	vim
+RUN pecl install imagick luasandbox redis
 
 # Install additional extensions
 RUN docker-php-ext-install \
-    zip 
+    zip pcntl
 
 # Enable additional PHP extensions
 RUN docker-php-ext-enable \
-    zip
+    zip imagick luasandbox pcntl redis
 
-#RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-#    && docker-php-ext-install -j$(nproc) gd
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
 # Enable additional PHP extensions
-#RUN docker-php-ext-enable \
-#    gd
+RUN docker-php-ext-enable \
+    gd
 
 
 # Install Composer (Reference: https://stackoverflow.com/a/58694421)
@@ -47,10 +52,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN echo -e " \
 memory_limit = ${PHP_MEMORY_LIMIT}\n \
 post_max_size = ${PHP_POST_MAX_SIZE}\n \
-upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE} \
-display_errors = on \
-error_reporting = E_ALL | E_STRICT \
-error_log = /var/log/php_errors.log \
+upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}\n \
+display_errors = on\n \
+error_reporting = E_ALL | E_STRICT\n \
+error_log = /var/log/php_errors.log\n \
 " > /usr/local/etc/php/conf.d/99-Wiki.ini
 
 RUN touch /var/log/php_errors.log

@@ -9,4 +9,9 @@ if [ -f "/var/www/html/LocalSettings.php" ] && ! grep -q "SemanticMediaWiki" /va
     echo "wfLoadExtension( 'SemanticMediaWiki' );" >> /var/www/html/LocalSettings.php
     echo "enableSemantics( 'LOCALHOST' );" >> /var/www/html/LocalSettings.php
 fi
-/usr/local/bin/php /var/www/html/maintenance/update.php
+
+composer update --no-dev
+if [ -f "/var/www/html/LocalSettings.php" ]
+then
+	/usr/local/bin/php /var/www/html/maintenance/update.php
+fi
