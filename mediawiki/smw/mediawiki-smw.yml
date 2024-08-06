@@ -33,10 +33,10 @@ services:
       - ${BIND_DIR}/LocalSettings.php:${LOCALSETTINGS_OVERRIDE}/var/www/html/LocalSettings.php:rw
 
       # Export dir where semantic will be installed to make persistent
-      - SemanticMediaWiki:/var/www/html/extensions/SemanticMediaWiki
+      - ${BIND_DIR}SemanticMediaWiki:/var/www/html/extensions/SemanticMediaWiki
 
       # PHP composer vendor folder (for persistence)
-      - vendor:/var/www/html/vendor:rw
+      - ${BIND_DIR}vendor:/var/www/html/vendor:rw
       
   database:
     image: mariadb
@@ -59,7 +59,7 @@ services:
       # Optionally initialize existing database
       - ${BIND_DIR}/.sql_init:/docker-entrypoint-initdb.d/:ro
       # Save DB data to volume
-      - db:/var/lib/mysql
+      - ${BIND_DIR}/db:/var/lib/mysql
 
 volumes:
   images:  
