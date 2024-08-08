@@ -23,7 +23,7 @@ services:
       - ${BIND_DIR}/extensions:/var/www/html/extensions-custom:rw
 
       # PHP Composer configuration
-      - ${BIND_DIR}/composer.local.json:${COMPOSER_OVERRIDE}$/var/www/html/composer.local.json:rw
+      - ${BIND_DIR}/composer.local.json:${COMPOSER_OVERRIDE}/var/www/html/composer.local.json:rw
 
       # Set site favicon
       - ${BIND_DIR}/favicon.ico:/var/www/html/favicon.ico
@@ -33,7 +33,7 @@ services:
       - ${BIND_DIR}/LocalSettings.php:${LOCALSETTINGS_OVERRIDE}/var/www/html/LocalSettings.php:rw
 
       # Export dir where semantic will be installed to make persistent
-      - ${BIND_DIR}SemanticMediaWiki:/var/www/html/extensions/SemanticMediaWiki
+      - ${BIND_DIR}/SemanticMediaWiki:/var/www/html/extensions/SemanticMediaWiki
 
       # PHP composer vendor folder (for persistence)
       - ${BIND_DIR}vendor:/var/www/html/vendor:rw
