@@ -83,3 +83,13 @@ To work around it temporarilly download a standalone copy of
 machine. Set the SMTP port in Mastodon to the host IP and SMTP user and pass
 to anything. MailHog will show the email that would have been sent in a web page.
 Use that to validate the account and then never worry about it again.
+
+## DB Encryption
+
+Mastodon recently required some new encryption keys for the database. These will
+break the running setup when you update. To fix it or on first install you will
+need to go into the `app/www` folder and run:
+
+    bin/rails db:encryption:init
+
+This will give you the keys you need to add to you ENV file.
