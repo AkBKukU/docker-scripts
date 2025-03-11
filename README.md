@@ -6,23 +6,16 @@ services I've ended up running. Different aspects of this will be broken out
 into different documents based you can find here:
 
  - Main Concepts: [README.md](README.md)
- - Docker Rootless Installation: [INSTALL-DOCKER.md](INSTALL-DOCKER.md)
+ - ~~Docker Rootless Installation: [INSTALL-DOCKER.md](INSTALL-DOCKER.md)~~ *Abandoned, it's not worth it.*
  - Reverse Proxy Hosting: [WIREGUARD-NGINX.md](WIREGUARD-NGINX.md)
  - Services:
  	 - MediaWiki: [README.md](mediawiki/README.md)
  	 - Mastodon: [README.md](mastodon/README.md)
  	 - Nextcloud: [README.md](nextcloud/README.md)
  	 - DaVinci Resolve Postgres: [README.md](postgres/README.md)
+ 	 - Gitea: [README.md](git/README.md)
 
 ## Main Concepts for Docker
-
-### Rootless - Security Layer
-*https://docs.docker.com/engine/security/rootless/*
-By default Docker runs as `root` on a linux system. While generally fine this 
-leaves the small risk of high level privileges being available to a successful
-container escape attack. Running "Docker Rootless" puts it in userspace and 
-moves its `systemd` control to that user. Docker itself will not be installed 
-system wide. These notes will be written assuming Docker Rootless is being used.
 
 ### Portainer - Management Interface
 *https://www.portainer.io/*
