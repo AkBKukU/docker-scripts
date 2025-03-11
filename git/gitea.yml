@@ -13,11 +13,11 @@ services:
       - USER_GID=1000
     restart: always
     networks:
-      - gitea
+      - external
     volumes:
-      - ./gitea:/data
+      - ${BIND_DIR}:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "3000:3000"
-      - "222:22"
+      - "${MAP_INTERFACE}${MAP_PORT_WEB}:3000"
+      - "${MAP_INTERFACE}${MAP_PORT_SSH}:22"
