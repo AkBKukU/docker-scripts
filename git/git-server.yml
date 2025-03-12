@@ -7,7 +7,7 @@ services:
     hostname: '${HOST_NAME}'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://${HOST_NAME}'
+        external_url 'http://${HOST_NAME}'
     ports:
       - '${MAP_INTERFACE}${MAP_PORT_WEB}:80'
       - '${MAP_INTERFACE}${MAP_PORT_WEBS}:443'
