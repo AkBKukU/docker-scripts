@@ -5,7 +5,7 @@ networks:
 
 services:
   server:
-    image: codeberg.org/forgejo/forgejo:latest
+    image: codeberg.org/forgejo/forgejo:10
     container_name: gitea
     environment:
       - USER_UID=1000
