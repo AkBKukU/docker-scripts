@@ -32,14 +32,17 @@ services:
       # After initialization unset ${INIT}
       - ${BIND_DIR}/LocalSettings.php:${LOCALSETTINGS_OVERRIDE}/var/www/html/LocalSettings.php:rw
 
-      # Export dir where semantic will be installed to make persistent
-      - ${BIND_DIR}/SemanticMediaWiki:/var/www/html/extensions/SemanticMediaWiki
+
+      # Export dir where semantic will be installed to make persistent and allow migrgating all related files
+      # semantic mediawiki extensions
+      - ${BIND_DIR}/smw-install/SemanticMediaWiki:/var/www/html/extensions/SemanticMediaWiki
+      - ${BIND_DIR}/smw-install/SemanticResultFormats:/var/www/html/extensions/SemanticResultFormats
 
       # PHP composer vendor folder (for persistence)
-      - ${BIND_DIR}vendor:/var/www/html/vendor:rw
+      - ${BIND_DIR}/smw-install/composer-vendor:/var/www/html/vendor:rw
       
   database:
-    image: mariadb
+    image: mariadb:11.1
     restart: always
     networks:
       - internal

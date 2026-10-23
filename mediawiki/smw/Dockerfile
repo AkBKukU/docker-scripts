@@ -46,7 +46,7 @@ RUN docker-php-ext-enable \
 
 
 # Install Composer (Reference: https://stackoverflow.com/a/58694421)
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.8.2 /usr/bin/composer /usr/local/bin/composer
 
 # Fix PHP stuff (idk what this fixes, it's been too long)
 RUN echo -e " \
